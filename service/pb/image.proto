@@ -1,0 +1,24 @@
+syntax="proto3";
+option go_package ="../pb";
+service ImgHandle {
+  rpc ImgToVector (Request) returns (Reply) {}
+  rpc TextToVector (TextRequest) returns (Reply){}
+}
+
+message Request {
+  string  Url =1;
+}
+
+message TextRequest{
+  string Content = 1;
+}
+
+
+message Reply {
+  string jsonData = 1;
+}
+
+
+////python -m grpc_tools.protoc -I./ --python_out=. --pyi_out=. --grpc_python_out=. ./*.proto
+
+//protoc --go_out=. --go-grpc_out=. ./*.proto
