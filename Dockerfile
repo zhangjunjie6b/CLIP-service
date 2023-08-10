@@ -1,4 +1,4 @@
-FROM  registry.cn-hangzhou.aliyuncs.com/modelscope-repo/modelscope:ubuntu20.04-py37-torch1.11.0-tf1.15.5-1.5.0
+FROM registry.cn-hangzhou.aliyuncs.com/modelscope-repo/modelscope:ubuntu20.04-cuda11.3.0-py37-torch1.11.0-tf1.15.5-1.6.0
 
 EXPOSE 50051
 RUN mkdir -p /usr/local/bin/service

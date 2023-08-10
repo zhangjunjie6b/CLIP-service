@@ -14,7 +14,8 @@ class ImgHandle(IMrpc.ImgHandleServicer):
 
         input_img = load_image(request.Url)
         img_embedding = work.forward({'img': input_img})['img_embedding']
-        numpy_array = img_embedding.numpy()
+        img_embedding_cpu = img_embedding.cpu()  # 将张量复制到主机内存
+        numpy_array = img_embedding_cpu.numpy()
         np.set_printoptions(suppress=True)
         array_string = np.array2string(numpy_array, separator=',')
         # 去除字符串中的换行符和空格
@@ -34,7 +35,7 @@ class ImgHandle(IMrpc.ImgHandleServicer):
         return Impb.Reply(jsonData= array_string)
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=100))
 
     IMrpc.add_ImgHandleServicer_to_server(ImgHandle(), server)
     server.add_insecure_port('0.0.0.0:50051')
