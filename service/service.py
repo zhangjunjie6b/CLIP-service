@@ -25,7 +25,7 @@ class ImgHandle(IMrpc.ImgHandleServicer):
 
     def TextToVector(self, textRequest, context):
         text_embedding = work.forward({'text': textRequest.Content})['text_embedding']
-        print(textRequest.Content)
+        text_embedding = text_embedding.cpu()  # 将张量复制到主机内存
         numpy_array = text_embedding.numpy()
         np.set_printoptions(suppress=True)
         array_string = np.array2string(numpy_array, separator=',')
